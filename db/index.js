@@ -16,7 +16,7 @@ const db = module.exports = new Sequelize(connectionString, {
 });
 
 // run our models file (makes all associations for our Sequelize objects)
-require('./models')
+require('./models/index')
 
 // sync the db, creating it if necessary
 function sync(force=false, retries=0, maxRetries=5) {

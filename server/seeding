@@ -1,0 +1,11 @@
+Users: 
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Graceo","password":"1359"}' http://localhost:1337/api/login
+
+Campuses: 
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Terra","location":"Earth"}' http://localhost:1337/api/users/1/new-campus
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Mars","location":"Mars"}' http://localhost:1337/api/users/1/new-campus
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Luna","location":"Moon"}' http://localhost:1337/api/users/1/new-campus
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Titan","location":"Titan"}' http://localhost:1337/api/users/1/new-campus
+
+Students: 
+    * curl -H "Content-Type: application/json" -X POST -d '{"name":"Gogo"}' http://localhost:1337/api/users/1/1/new-student
