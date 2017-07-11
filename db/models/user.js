@@ -17,7 +17,7 @@ module.exports = db.define('user', {
     allowNull: false,
     unique: true
   }
-})
+});
 
 //user will need
 //  - a user.name: string, cannot be null, does have to be unique

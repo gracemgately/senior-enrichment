@@ -9,3 +9,7 @@ const rootReducer = function(state = initialState, action) {
 };
 
 export default rootReducer
+
+//NOTE: can initial campuses and students and admin be
+//placed inside the store as a way to create a default
+//database?

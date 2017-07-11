@@ -105,6 +105,7 @@ api.put('/users/:userId/campus/:campusId/edit', (req, res) => {
 api.delete('/users/:userId/campus/:campusId/delete', (req, res) => {
 	return Campus.findById(req.params.campusId)
 	.then(function(campus){
+		console.log(campus);
 		if (campus.campusAdminId !== Number(req.params.userId)){
 			res.send('You do not have permission to delete this campus.');
 		}
@@ -135,7 +136,6 @@ api.post('/users/:userId/campus/:campusId/new-student', (req, res) => {
 			})
 		}
 		else {
-
 			return User.findById(req.params.userId)
 			.then(function(user){
 				res.send(`${req.body.name} was already enrolled at this campus by ${user.name}!`)
@@ -182,17 +182,17 @@ api.get('/campus', (req, res) => {
 	.catch(console.error());
 });//send all campuses
 
+//<<<<<THIS ROUTE NOT WORKING>>>>>
 api.get('/campus/:campusId/students'), (req, res) => {
 	return Student.findAll({where: {campusId: req.params.campusId}})
 	.then(function(students){
-		console.log(students[0].campusId)
+		//console.log(students[0].campusId)
 		res.send({students})
 	})
 	.catch(console.error());
 }//all students at one campus
 
 //-------FIND STUDENT INFORMATION-------
-
 
 api.get('/students', (req, res) => {
 	Student.findAll({})

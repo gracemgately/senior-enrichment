@@ -3,7 +3,7 @@ var Sequelize = require('sequelize')
 var db = require('../index.js')
 
 
-var Campus = db.define('campus', {
+module.exports = db.define('campus', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -15,25 +15,6 @@ var Campus = db.define('campus', {
       type: Sequelize.STRING,
       allowNull: false
   }
-  }, {
-    instanceMethods: {
-      getStudents: function (){
-        return db.model('student').findAll({
-          include: [{
-            model: db.model('student'),
-            where: { campusId: this.id } // makes this entire query an inner join
-          }]
-        })
-      }, 
-      getAdministrator: function(){
-        return db.model('user').findAll({
-          include: [{
-            model: db.model('user'),
-            where: { id: this.userId } // makes this entire query an inner join
-          }]
-        })
-      }
-    }
   }, {
     hooks: {
       beforeUpdate: function(){
@@ -49,5 +30,3 @@ var Campus = db.define('campus', {
       }
     }
   });
-
-module.exports = Campus;

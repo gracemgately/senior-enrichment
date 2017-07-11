@@ -11,9 +11,19 @@ const Student = require('./student');
 const Campus = require('./campus')
 
 Campus.hasMany(Student);
-User.hasMany(Student, {foreignKey: 'studentAdminId'});
-User.hasMany(Campus, {foreignKey: 'campusAdminId'});
+Student.belongsTo(Campus);
+//enables Student.setCampus(campus,{save: false/true}) and
+//Student.getCampus (built-in Sequelize methods)
 
+User.hasMany(Student, {foreignKey: 'studentAdminId'});
+Student.belongsTo(User, {foreignKey: 'studentAdminId'});
+//enables Student.setUser(user,{save: false/true}) and
+//Student.getUser (built-in Sequelize methods)
+
+User.hasMany(Campus, {foreignKey: 'campusAdminId'});
+Campus.belongsTo(User, {foreignKey: 'campusAdminId'});
+//enables Campus.setUser(user,{save: false/true}) and
+//Student.getUser (built-in Sequelize methods)
 
 module.exports = {
 	User: User,
