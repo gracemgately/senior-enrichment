@@ -1,6 +1,17 @@
 #home-student-nav{
     background-color: lightgrey;
-    text-indent: 75vw;
     padding-top: 15px;
     padding-bottom: 15px
+}
+
+#student-home{
+    text-indent: 75vw;
+}
+
+#login-input{
+    padding-left: 5vw;
+}
+
+.login-info{
+    padding: 5px;
 }
