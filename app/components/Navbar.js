@@ -21,12 +21,13 @@ export default class Navbar extends Component {
              </div>
              <div>
                         <Switch>
-                        <Route exact path={`/`} render={() => (
-                            <AllCampuses />
-                        )} />
                         <Route path={`/students`} render={() => (
                             <AllStudents />
                         )} />
+                        <Route path={`/`} render={() => (
+                            <AllCampuses /> 
+                        )} />
+
                         </Switch>
             </div>
             </div>

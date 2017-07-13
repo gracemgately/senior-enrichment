@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';  
 import SingleCampus from './SingleCampus'
+import AddCampus from './AddCampus';
 
 import store from '../store';
 import { getCampuses } from '../reducers';
@@ -35,19 +36,21 @@ export default class AllCampuses extends Component {
         //even though it worked for the allstudent/singlestudent view?
 
     render(){
+        console.log(this.state.campuses)
         return(
-            <div>
+            <div className='container-fluid'>
                  <ul>
-                    {store.getState().campuses.map(campus => {
+                    {this.state.campuses.map(campus => {
                         return (
-                            <div key={campus.id}>
-                            <li><Link to={`/${campus.id}`}>{campus.name}</Link></li>
-                                <Route path={`/${campus.id}`} render={() => (
-                                    <SingleCampus/>)} />
+                            <div className='row' key={campus.id}>
+                            <li><Link to={`/campus/${campus.id}`}>{campus.name}</Link></li>
+                                <Route path={`/campus/${campus.id}`} render={() => (
+                                    <SingleCampus singleCampus={campus.id}/>)} />
                             </div>
                             )}
                         )}
                  </ul>
+                 <AddCampus/>
             </div>
         )
     }

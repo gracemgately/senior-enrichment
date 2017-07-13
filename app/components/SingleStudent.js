@@ -28,12 +28,10 @@ export default class SingleStudent extends Component {
         return(
             <div>
             <hr></hr>
-                <div className='container-fluid'>
-                    <div className='row justify-content-md-center'>
-                        <div className='col-6'>{this.state.student.name}</div>
-                        <div className='col-6'>{this.state.studentCampus}</div>
-                    </div>
-                </div>
+                    <div>{this.state.studentCampus}</div>
+                    <button type="submit" className="login-info btn btn-success">
+                        UNENROLL
+                    </button>
                 <hr></hr>
             </div>
         )

@@ -49,7 +49,7 @@ export default class Login extends Component {
 
     onSubmit(event){
         event.preventDefault();
-        if (store.getState().username === '' || store.getState().password === ''){
+        if (this.state.username === '' || this.state.password === ''){
             store.dispatch(createUser({
                 //otherwise empty the state 
                 username: '',
@@ -61,13 +61,11 @@ export default class Login extends Component {
         }
         else {
             axios.post('/api/login', {
-                name: store.getState().username,
-                password: store.getState().password
+                name: this.state.username,
+                password: this.state.password
             })
             .then(res => res.data)
             .then(response => {
-                if (response.user){//if the user has been created, add them to the
-                    //state and make their validation true
                     store.dispatch(createUser({
                         username: response.user.name,
                         password: response.user.password,
@@ -75,17 +73,6 @@ export default class Login extends Component {
                         validation: true
                     })
                     )
-                }
-                else {
-                    this.dispatch(createUser({
-                        //otherwise empty the state 
-                        username: '',
-                        password: '',
-                        userId: null,
-                        validation: response
-                    })
-                    )
-                }
             })
         }
         this.refs.usernameinfo.value='';//reset forms to empty after submission
@@ -119,7 +106,7 @@ export default class Login extends Component {
                         <button type="submit" className="login-info btn btn-success" onClick={this.handleClick}>
                         LOGIN
                         </button>
-                        {store.getState().showLoginComponent ? <LoggedIn user={store.getState()}/> : null}
+                        {this.state.showLoginComponent ? <LoggedIn user={this.state}/> : null}
                     </form>
                 </div>
         )

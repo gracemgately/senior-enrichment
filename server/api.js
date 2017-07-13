@@ -27,7 +27,10 @@ api.post('/login', (req, res) => {
 				res.send({user})
 			})
 		}
-		else res.send(`${user[0].name} already exists!`)//otherwise, send user information
+		else {
+			var user = user[0]
+			res.send({user})
+		}//otherwise, send user information
 	})
 	.catch(console.error())
 });

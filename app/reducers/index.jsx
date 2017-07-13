@@ -6,9 +6,13 @@ const initialState = {
   userId: null,
   validation: false,
   showLoginComponent: false,//
+
   campuses: [],//--> campuses is from AllCampuses.js
   students: [],//--> students from AllStudents.js, passed as props
               //to SingleStudent.js
+
+  studentName: '',
+  studentCampus: '',
 }
 
 //ACTION TYPES
@@ -24,6 +28,8 @@ const GET_CAMPUSES = 'GET_CAMPUSES';
 
 //Students
 const GET_STUDENTS = 'GET_STUDENTS';
+const WRITE_STUDENT_NAME = 'WRITE_STUDENT_NAME';
+const SELECT_STUDENT_CAMPUS = 'SELECT_STUDENT_CAMPUS';
 
 //ACTION CREATORS
 
@@ -81,6 +87,22 @@ export function getStudents(studentsArr){
   return action;
 }
 
+export function writeStudentName(student){
+  const action = {
+    type: WRITE_STUDENT_NAME,
+    studentName: student,
+  }
+  return action;
+}
+
+export function selectStudentCampus(campus){
+    const action = {
+      type: SELECT_STUDENT_CAMPUS,
+      studentCampus: campus,
+  }
+  return action;
+}
+
 //REDUCER
 
 
@@ -128,6 +150,20 @@ const rootReducer = function(state = initialState, action) {
     case GET_STUDENTS:{
       var newState = Object.assign({}, state, {
         students: action.students
+      })
+      return newState;
+    }
+
+    case WRITE_STUDENT_NAME:{
+      var newState = Object.assign({}, state, {
+          studentName: action.studentName,
+      })
+      return newState;
+    }
+
+    case SELECT_STUDENT_CAMPUS:{
+      var newState = Object.assign({}, state, {
+          studentCampus: action.studentCampus,
       })
       return newState;
     }
