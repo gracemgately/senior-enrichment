@@ -67,6 +67,12 @@ export default class AddCampus extends Component {
         this.refs.campusLoc.value = '';
     }
 
+    handleClick(event){
+
+    }
+
+    //RENDER
+
     render(){
         return (
             <div>
