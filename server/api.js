@@ -17,7 +17,6 @@ const Student = db.Student;
 api.post('/login', (req, res) => {
 	return User.findAll({where: {name: req.body.name, password: req.body.password}})
 	.then(function(user){
-		console.log(user)
 		if (!user.length){//if the user doesn't exist, create a new account
 			return User.create({
 				name: req.body.name,
@@ -108,7 +107,6 @@ api.put('/users/:userId/campus/:campusId/edit', (req, res) => {
 api.delete('/users/:userId/campus/:campusId/delete', (req, res) => {
 	return Campus.findById(req.params.campusId)
 	.then(function(campus){
-		console.log(campus);
 		if (campus.campusAdminId !== Number(req.params.userId)){
 			res.send('You do not have permission to delete this campus.');
 		}

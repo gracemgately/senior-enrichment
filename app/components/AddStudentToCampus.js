@@ -43,11 +43,6 @@ export default class AddStudentToCampus extends Component {
                     axios.put(`/api/users/${userId}/campus/${this.props.campusId}/students/${student.id}/edit`,{
                         name: student.name
                     })
-                    .then(res => res.data)
-                    .then(response => {
-                        console.log('RESPONSE', response);
-                        console.log('STATE STUDENTS', this.state.students);
-                    })
                 }
             })
         }
