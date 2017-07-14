@@ -11,3 +11,5 @@ Students:
     * curl -H "Content-Type: application/json" -X POST -d '{"name":"Gogo"}' http://localhost:1337/api/users/1/campus/1/new-student
     * curl -H "Content-Type: application/json" -X POST -d '{"name":"Hopper"}' http://localhost:1337/api/users/1/campus/2/new-student
     * curl -H "Content-Type: application/json" -X POST -d '{"name":"Ada Lovelace"}' http://localhost:1337/api/users/1/campus/3/new-student
+
+    * curl -H "Content-Type: application/json" -X PUT -d '{"name":"Ada Lovelace"}' http://localhost:1337/api/users/1/campus/2/students/3/edit

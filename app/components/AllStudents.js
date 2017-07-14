@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import axios from 'axios';
 import SingleStudent from './SingleStudent';
 import AddStudent from './AddStudent';
 
 import store from '../store';
-import { getStudents } from '../reducers';
 
 export default class AllStudents extends Component {
 
     constructor(){
         super();
         this.state = store.getState();
-    //the state will hold all the campuses
     }
 
     //COMPONENTS
 
     componentDidMount(){
         this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
-
-        axios.get('/api/students')
-        .then(res => res.data)
-        .then(students => {
-            store.dispatch(getStudents(students.students))
-        })
     }
 
     componentWillUnmount(){
@@ -35,11 +26,11 @@ export default class AllStudents extends Component {
 
     render(){
         return(
-            <div>
+            <div className = 'container-fluid'>
                  <ul>
                     {this.state.students.map(student => {
                         return (
-                            <div key={student.id}>
+                            <div className = 'row' key={student.id}>
                             <li>
                                 <Link to={`/students/${student.id}`}>{student.name}</Link>
                             </li>
@@ -48,7 +39,7 @@ export default class AllStudents extends Component {
                             </div>
                             )}
                         )}
-                 </ul>
+                 </ul>            
                  <AddStudent/>
             </div>
         )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import store from '../store';
-import {  } from '../reducers';
+import { getCampuses, writeCampusName, writeCampusLoc } from '../reducers';
 
 export default class AddCampus extends Component {   
 
@@ -17,7 +17,7 @@ export default class AddCampus extends Component {
     //COMPONENTS: 
 
     componentDidMount(){
-        this.unsubscribe = store.subscribe(() => this.setState(this.state));
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
     }
 
     componentWillUnmount(){
@@ -30,11 +30,11 @@ export default class AddCampus extends Component {
         var targetName = event.target.name;
         var targetValue = event.target.value
         
-        if (targetName === 'studentName'){
-            store.dispatch(writeStudentName(targetValue));
-        }
         if (targetName === 'campusName'){
-            store.dispatch(selectStudentCampus(targetValue));
+            store.dispatch(writeCampusName(targetValue));
+        }
+        if (targetName === 'campusLoc'){
+            store.dispatch(writeCampusLoc(targetValue));
         }
 
     }
@@ -47,56 +47,46 @@ export default class AddCampus extends Component {
             console.log('no associated user!')
         }
         else {
-            this.state.campuses.forEach(campus => {
-                if (campus.name === this.state.studentCampus){
-                    var campusId = campus.id;
-                    axios.post(`api/users/${userId}/campus/${campusId}/new-student`,{
-                        name: this.state.studentName
-                    })
-                    .then(res => res.data)
-                    .then(response => {
-                        if (response.length){
-                            console.log(response);
-                        }
-                        else {
-                            var addStudent = this.state.students;
-                            addStudent.push(response);
-                            store.dispatch(getStudents(addStudent));
-                        }
-                    })
+            axios.post(`/api/users/${userId}/new-campus`, {
+                name: this.state.campusName,
+                location: this.state.campusLocation
+            })
+            .then(res => res.data)
+            .then(response => {
+                if(response.length){
+                    console.log(response);
+                }
+                else {
+                    var addCampus = this.state.campuses;
+                    addCampus.push(response);
+                    store.dispatch(getCampuses(addCampus));
                 }
             })
         }
-        this.refs.studentName.value = '';
+        this.refs.campusName.value = '';
+        this.refs.campusLoc.value = '';
     }
 
     render(){
         return (
             <div>
-                Add a student:
-                    <form id='new-student-input' onSubmit={this.onSubmit}>
+                Add a campus:
+                    <form id='new-campus-input' onSubmit={this.onSubmit}>
                     <div className='student-info'>Name:
                         <input
-                            name='studentName'
-                            ref='studentName'
+                            name='campusName'
+                            ref='campusName'
                             onChange={this.handleChange}
                         />
                     </div>
-                    <div className='student-info'>Campus:
-                        <select 
-                        name='campusName'
-                        onChange={this.handleChange}>
-                        <option></option>
-                        {this.state.campuses.map(campus => {
-                            return (
-                                <option key={campus.id}>{campus.name}</option>
-                            )
-                        })
-                    }
-                        </select>
+                    <div className='student-info'>Location:
+                        <input 
+                        name='campusLoc'
+                        ref='campusLoc'
+                        onChange={this.handleChange}/>
                     </div>
                     <button type="submit" className="login-info btn btn-success">
-                        ADD STUDENT
+                        ADD CAMPUS
                     </button>
                 </form>
             </div>

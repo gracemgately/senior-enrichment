@@ -79,7 +79,7 @@ export default class Login extends Component {
         this.refs.passwordinfo.value='';
     }
 
-    handleClick(){
+    handleClick(event){
         store.dispatch(showLogin(true));
     }
 

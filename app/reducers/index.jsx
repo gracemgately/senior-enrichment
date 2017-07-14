@@ -5,14 +5,20 @@ const initialState = {
   password: '',//they are currently passed as props to LoggedIn.js
   userId: null,
   validation: false,
-  showLoginComponent: false,//
+  showLoginComponent: false,
+
 
   campuses: [],//--> campuses is from AllCampuses.js
   students: [],//--> students from AllStudents.js, passed as props
               //to SingleStudent.js
 
-  studentName: '',
-  studentCampus: '',
+  studentName: '',//--> for adding a single student
+  studentCampus: '',//to a particular campus
+
+
+  campusName: '',//since this logic is essentially the same as 
+  campusLocation: ''//adding a new student to a campus, I'll refactor 
+  //these methods into one later if there is time
 }
 
 //ACTION TYPES
@@ -25,6 +31,8 @@ const SHOW_LOGIN = 'SHOW_LOGIN';
 
 //Campuses
 const GET_CAMPUSES = 'GET_CAMPUSES';
+const WRITE_CAMPUS_NAME = 'WRITE_CAMPUS_NAME';
+const WRITE_CAMPUS_LOC = 'WRITE_CAMPUS_LOC';
 
 //Students
 const GET_STUDENTS = 'GET_STUDENTS';
@@ -79,6 +87,22 @@ export function getCampuses(campusesArr){
   return action;
 }
 
+export function writeCampusName(campus){
+  const action = {
+    type: WRITE_CAMPUS_NAME,
+    campusName: campus,
+  }
+  return action;
+}
+
+export function writeCampusLoc(location){
+    const action = {
+      type: WRITE_CAMPUS_LOC,
+      campusLocation: location,
+  }
+  return action;
+}
+
 export function getStudents(studentsArr){
   const action = {
     type: GET_STUDENTS,
@@ -102,6 +126,12 @@ export function selectStudentCampus(campus){
   }
   return action;
 }
+
+//THUNK CREATORS
+// if there is time I would like to create thunks which GET 
+// all students & all campuses; POST new students, campuses, users;
+// PUT student information and campus information; DELETE campuses
+// and students
 
 //REDUCER
 
@@ -143,6 +173,20 @@ const rootReducer = function(state = initialState, action) {
     case GET_CAMPUSES:{
       var newState = Object.assign({}, state, {
         campuses: action.campuses
+      })
+      return newState;
+    }
+
+    case WRITE_CAMPUS_NAME:{
+      var newState = Object.assign({}, state, {
+          campusName: action.campusName,
+      })
+      return newState;
+    }
+
+    case WRITE_CAMPUS_LOC:{
+      var newState = Object.assign({}, state, {
+          campusLocation: action.campusLocation,
       })
       return newState;
     }

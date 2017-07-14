@@ -17,7 +17,7 @@ export default class AddStudent extends Component {
     //COMPONENTS: 
 
     componentDidMount(){
-        this.unsubscribe = store.subscribe(() => this.setState(this.state));
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
     }
 
     componentWillUnmount(){
@@ -44,7 +44,7 @@ export default class AddStudent extends Component {
 
         var userId = this.state.userId;
         if (!userId){
-            console.log('no associated user!')
+            console.log('no associated user!');
         }
         else {
             this.state.campuses.forEach(campus => {

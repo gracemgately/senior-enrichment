@@ -113,10 +113,8 @@ api.delete('/users/:userId/campus/:campusId/delete', (req, res) => {
 			res.send('You do not have permission to delete this campus.');
 		}
 		else {
-			return campus.destroy({force: true}) //if the old admin is making request
-			.then(function(){
-				res.send(`This campus was deleted.`)
-			});
+			res.send(`This campus was deleted.`)
+			return campus.destroy({force: true}) //if the admin is making request
 		}
 	})
 	.catch(console.error())
@@ -151,7 +149,7 @@ api.post('/users/:userId/campus/:campusId/new-student', (req, res) => {
 //EDIT A STUDENT AT A CAMPUS, CHANGE STUDENT TO ANOTHER CAMPUS
 api.put('/users/:userId/campus/:campusId/students/:studentId/edit', (req, res) => {
 	//note: currently unable to edit administrators
-	return Student.findById(eq.params.studentId)
+	return Student.findById(req.params.studentId)
 	.then(function(student){
 		if (student.studentAdminId !== Number(req.params.userId)){
 			res.send('You do not have permission to edit this student.');
@@ -171,8 +169,18 @@ api.put('/users/:userId/campus/:campusId/students/:studentId/edit', (req, res) =
 });
 
 //DELETE A STUDENT FROM A CAMPUS
-api.delete('/users/:userId/campus/:campusId/students/:studentId/delete', (req, res) => {
-
+api.delete('/users/:userId/students/:studentId/delete', (req, res) => {
+	return Student.findById(req.params.studentId)
+	.then(function(student){
+		if (student.studentAdminId !== Number(req.params.userId)){
+			res.send('You do not have permission to delete this student.')
+		}
+		else {
+			res.send(`${student.name} was unenrolled from the school.`)
+			return student.destroy({force:true});
+		}
+	})
+	.catch(console.error());
 });
 
 //-------FIND CAMPUS INFORMATION-------
@@ -184,16 +192,6 @@ api.get('/campus', (req, res) => {
 	})
 	.catch(console.error());
 });//send all campuses
-
-//<<<<<THIS ROUTE NOT WORKING>>>>>
-api.get('/campus/:campusId/students'), (req, res) => {
-	return Student.findAll({where: {campusId: req.params.campusId}})
-	.then(function(students){
-		//console.log(students[0].campusId)
-		res.send({students})
-	})
-	.catch(console.error());
-}//all students at one campus
 
 //-------FIND STUDENT INFORMATION-------
 
